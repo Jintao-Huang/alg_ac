@@ -7,7 +7,7 @@ public:
     {
         unordered_map<int, int> mapper;
         int n_len = nums.size();
-        for (int i = 0; i < n_len; i++)
+        for (int i = 0; i < n_len; ++i)
         {
             int x = nums[i];
             if (mapper.count(target - x))

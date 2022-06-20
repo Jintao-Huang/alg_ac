@@ -1,4 +1,4 @@
-#include "load-modules.cpp"
+#include "load_modules.cpp"
 #include "io.cpp"
 
 /* List */
@@ -31,7 +31,7 @@ int _get_number(const string &s, int &p)
 vector<int> &str_to_vector(const string &s, vector<int> &dst)
 {
     int s_len = s.size();
-    for (int i = 0; i < s_len; i++)
+    for (int i = 0; i < s_len; ++i)
     {
         char c = s[i];
         if (isdigit(c))
@@ -55,7 +55,7 @@ ListNode *str_to_list(const string &s)
     ListNode *head, *p;
     // 直接赋第一个
     head = p = new ListNode(v[0]);
-    for (int i = 1; i < v_len; i++)
+    for (int i = 1; i < v_len; ++i)
     {
         int x = v[i];
         p->next = new ListNode(x);
@@ -96,7 +96,7 @@ bool _is_null(const string &s, int &p)
 {
     int null_len = 4;
     char null_str[null_len + 1] = "null";
-    for (int i = 0; i < null_len; i++)
+    for (int i = 0; i < null_len; ++i)
     {
         if (s[p + i] != null_str[i])
         {
@@ -110,7 +110,7 @@ bool _is_null(const string &s, int &p)
 vector<TreeNode *> &_str_to_tn_vector(const string &s, vector<TreeNode *> &dst)
 {
     int s_len = s.size();
-    for (int i = 0; i < s_len; i++)
+    for (int i = 0; i < s_len; ++i)
     {
         char c = s[i];
         if (isdigit(c))

@@ -1,7 +1,30 @@
-#include "load-modules.cpp"
+#include "load_modules.cpp"
 
 #ifndef _IO
 #define _IO
+
+template<class T>
+ostream &operator<<(ostream &out, const vector<T> &v)
+{
+    out << '[';
+    bool is_first = true;
+    for (const T &x : v)
+    {
+        if (is_first)
+        {
+            is_first = false;
+        }
+        else
+        {
+            out << ", ";
+        }
+        //
+        out << x;
+    }
+    out << ']';
+    return out;
+}
+template<>
 ostream &operator<<(ostream &out, const vector<int> &v)
 {
     out << '[';
@@ -31,10 +54,10 @@ ostream &operator<<(ostream &out, const vector<int> &v)
 }
 
 template<class T>
-using pii = pair<T, int>;
+using pTi = pair<T, int>;
 
 template<class T>
-ostream &operator<<(ostream &out, const vector<pii<T>> &vp)
+ostream &operator<<(ostream &out, const vector<pTi<T>> &vp)
 {
     out << '{';
     bool is_first = true;
@@ -55,8 +78,8 @@ ostream &operator<<(ostream &out, const vector<pii<T>> &vp)
 }
 
 template <class T>
-vector<pii<T>>& _unordered_map_to_vector(const unordered_map<T, int> &um, vector<pii<T>> &dst){
-    for(typename unordered_map<T, int>::const_iterator it= um.begin(); it!=um.end(); it++){
+vector<pTi<T>>& _unordered_map_to_vector(const unordered_map<T, int> &um, vector<pTi<T>> &dst){
+    for(typename unordered_map<T, int>::const_iterator it= um.begin(); it!=um.end(); ++it){
         dst.emplace_back(*it);
     }
     return dst;
@@ -64,8 +87,8 @@ vector<pii<T>>& _unordered_map_to_vector(const unordered_map<T, int> &um, vector
 
 template<class T>
 ostream &operator<<(ostream &out, const unordered_map<T, int> &um){
-    vector<pii<T>> vpii;
-    out << _unordered_map_to_vector(um, vpii);
+    vector<pTi<T>> vpTi;
+    out << _unordered_map_to_vector(um, vpTi);
     return out;
 }
 
@@ -81,9 +104,6 @@ ostream &operator<<(ostream &out, const unordered_map<T, int> &um){
 //     um2[3] = 5;
 //     cout << um2 << '\n';
 // }
-
-
-
 
 
 #endif

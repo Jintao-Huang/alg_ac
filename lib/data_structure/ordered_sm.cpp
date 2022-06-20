@@ -1,5 +1,5 @@
 
-# include "../load-modules.cpp"
+# include "../load_modules.cpp"
 # include "../io.cpp"
 
 class OrderedSet{
@@ -7,11 +7,11 @@ class OrderedSet{
 };
 
 class OrderedMap{
-public:
+private:
     using list_pair = list<pair<int, int>>;
     list_pair l;
     unordered_map<int, list_pair::iterator> um;
-    //
+public:
     int & operator [](int i){
         if (um.count(i) == 0){
             // 插入
@@ -60,7 +60,7 @@ public:
     }
     //
     vector<pair<int ,int>> & to_vector(vector<pair<int ,int>> &dst){
-        for (auto it = l.begin(); it != l.end(); it++){
+        for (auto it = l.begin(); it != l.end(); ++it){
             dst.emplace_back(*it);
         }
         return dst;
