@@ -1,20 +1,17 @@
-#include "load_modules.cpp"
-
 #ifndef _IO
 #define _IO
 
-template<class T>
+#include "load_modules.cpp"
+
+template <class T>
 ostream &operator<<(ostream &out, const vector<T> &v)
 {
     out << '[';
-    bool is_first = true;
-    for (const T &x : v)
+    int v_len = v.size();
+    for (int i = 0; i < v_len; ++i)
     {
-        if (is_first)
-        {
-            is_first = false;
-        }
-        else
+        T x = v[i];
+        if (i != 0)
         {
             out << ", ";
         }
@@ -24,18 +21,16 @@ ostream &operator<<(ostream &out, const vector<T> &v)
     out << ']';
     return out;
 }
-template<>
+
+template <>
 ostream &operator<<(ostream &out, const vector<int> &v)
 {
     out << '[';
-    bool is_first = true;
-    for (const int &x : v)
+    int v_len = v.size();
+    for (int i = 0; i < v_len; ++i)
     {
-        if (is_first)
-        {
-            is_first = false;
-        }
-        else
+        int x = v[i];
+        if (i != 0)
         {
             out << ", ";
         }
@@ -53,15 +48,33 @@ ostream &operator<<(ostream &out, const vector<int> &v)
     return out;
 }
 
-template<class T>
+template <class T>
+ostream &operator<<(ostream &out, const vector<vector<T>> &m)
+{
+    out << '[';
+    int r_len = m.size();
+    for (int i = 0; i < r_len; ++i)
+    {
+        if (i != 0)
+        {
+            out << ", ";
+        }
+        //
+        cout << m[i];
+    }
+    out << ']';
+    return out;
+}
+
+template <class T>
 using pTi = pair<T, int>;
 
-template<class T>
+template <class T>
 ostream &operator<<(ostream &out, const vector<pTi<T>> &vp)
 {
     out << '{';
     bool is_first = true;
-    for(const pair<T, int> &p : vp)
+    for (const pair<T, int> &p : vp)
     {
         if (is_first)
         {
@@ -71,22 +84,25 @@ ostream &operator<<(ostream &out, const vector<pTi<T>> &vp)
         {
             out << ", ";
         }
-        out << p.first << ": "<< p.second;
+        out << p.first << ": " << p.second;
     }
     out << '}';
     return out;
 }
 
 template <class T>
-vector<pTi<T>>& _unordered_map_to_vector(const unordered_map<T, int> &um, vector<pTi<T>> &dst){
-    for(typename unordered_map<T, int>::const_iterator it= um.begin(); it!=um.end(); ++it){
+vector<pTi<T>> &_unordered_map_to_vector(const unordered_map<T, int> &um, vector<pTi<T>> &dst)
+{
+    for (typename unordered_map<T, int>::const_iterator it = um.begin(); it != um.end(); ++it)
+    {
         dst.emplace_back(*it);
     }
     return dst;
-} 
+}
 
-template<class T>
-ostream &operator<<(ostream &out, const unordered_map<T, int> &um){
+template <class T>
+ostream &operator<<(ostream &out, const unordered_map<T, int> &um)
+{
     vector<pTi<T>> vpTi;
     out << _unordered_map_to_vector(um, vpTi);
     return out;
@@ -103,7 +119,8 @@ ostream &operator<<(ostream &out, const unordered_map<T, int> &um){
 //     um2[2] = 1;
 //     um2[3] = 5;
 //     cout << um2 << '\n';
+//     vector<vector<char>> m = {{'X', 'O', 'X'}, {'O', 'X', 'X'}};
+//     cout << m << '\n';
 // }
-
 
 #endif

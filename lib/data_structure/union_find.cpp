@@ -1,3 +1,6 @@
+
+#ifndef _UNION_FIND
+#define _UNION_FIND
 #include "../load_modules.cpp"
 
 class UFSet
@@ -9,16 +12,14 @@ private:
     vector<int> sizes;
 
 public:
-    UFSet(int n)
+    // cnt: ufset的个数
+    // sizes: 使用每个ufset的size(不使用树高)来作为合并的指标
+    UFSet(int n) : n(n), cnt(n), parent(n), sizes(n, 1)
     {
-        this->n = n;
-        cnt = n; // cnt: ufset的个数
-        parent.resize(n);
         for (int i = 0; i < n; i++)
         {
             parent[i] = i; // 代表没有父节点, 自己是根节点
         }
-        sizes = vector<int>(n, 1); // 使用每个ufset的size(不使用树高)来作为合并的指标
     }
     int find_root(int a)
     {
@@ -75,3 +76,4 @@ public:
 //     cout << ufset.size(1) << '\n';
 //     cout << ufset.size() << '\n';
 // }
+#endif

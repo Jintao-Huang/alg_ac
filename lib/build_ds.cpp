@@ -1,3 +1,6 @@
+
+#ifndef _BUILD_DS
+#define _BUILD_DS
 #include "load_modules.cpp"
 #include "io.cpp"
 
@@ -37,6 +40,34 @@ vector<int> &str_to_vector(const string &s, vector<int> &dst)
         if (isdigit(c))
         {
             dst.push_back(_get_number(s, i));
+        }
+    }
+    return dst;
+}
+
+vector<vector<int>> &str_to_matrix(const string &s, vector<vector<int>> &dst)
+{
+    // 1. 统计[的匹配, 如果匹配, 则取lo, hi, 提取substring
+    // 2. str_to_vector
+    int i = 0;
+    while (s[i] != '[')
+    { // 去除第一个的[
+        ++i;
+    }
+    ++i;
+    int s_len = s.size();
+    int start;
+    for (; i < s_len; ++i)
+    {
+        if (s[i] == '[')
+        {
+            start = i;
+        }
+        else if (s[i] == ']')
+        {
+            vector<int> v;
+            str_to_vector(s.substr(start, i - start + 1), v);
+            dst.push_back(v);
         }
     }
     return dst;
@@ -145,13 +176,19 @@ TreeNode *str_to_tree(const string &s)
         TreeNode *p = dq.front();
         dq.pop_front();
         TreeNode *tn = v[i++];
-        dq.push_back(tn);
+        if (tn != nullptr)
+        {
+            dq.push_back(tn);
+        }
         p->left = tn;
         //
         if (i < v_len)
         {
             tn = v[i++];
-            dq.push_back(tn);
+            if (tn != nullptr)
+            {
+                dq.push_back(tn);
+            }
             p->right = tn;
         }
     }
@@ -207,4 +244,9 @@ ostream &operator<<(ostream &out, TreeNode *root)
 //     //
 //     TreeNode *root = str_to_tree("[-10, 9, 20, null, null, 15, 7]");
 //     cout << root << '\n';
+//     vector<vector<int>> m;
+//     str_to_matrix("[[1, 2], [3, 4]]", m);
+//     cout << m << '\n';
 // }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef _PRIORITY_QUEUE
+#define _PRIORITY_QUEUE
+
 #include "../load_modules.cpp"
 #include "../io.cpp"
 
@@ -6,12 +9,13 @@ class PriorityQueue
 {
 private:
     vector<T> heap;
+
 public:
     //
     PriorityQueue() {}
-    PriorityQueue(initializer_list<T> &&il)
+    PriorityQueue(initializer_list<T> &&il) : heap(il)
     {
-        heap = il;
+
         make_heap(heap.begin(), heap.end());
     }
     void add(T elem)
@@ -41,12 +45,14 @@ public:
     }
 };
 
-int main()
-{
-    PriorityQueue<float> pq{1.2, 6, 3, 4, 8, 2, 5, 7};
-    cout << pq << '\n';
-    pq.pop();
-    cout << pq << '\n';
-    pq.add(100);
-    cout << pq << '\n';
-}
+// int main()
+// {
+//     PriorityQueue<float> pq{1.2, 6, 3, 4, 8, 2, 5, 7};
+//     cout << pq << '\n';
+//     pq.pop();
+//     cout << pq << '\n';
+//     pq.add(100);
+//     cout << pq << '\n';
+// }
+
+#endif

@@ -14,10 +14,9 @@
 #include <list>
 #include <tuple>
 #include <algorithm>
+#include <cassert>
 
 using namespace std;
 //
 #define INT32_NULL INT32_MIN
-
-
 #endif
