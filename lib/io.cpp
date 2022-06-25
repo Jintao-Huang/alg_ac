@@ -22,6 +22,33 @@ ostream &operator<<(ostream &out, const vector<T> &v)
     return out;
 }
 
+// template <class T1, class T2>
+// ostream &operator<<(ostream &out, const pair<T1, T2> &p)
+// {
+//     out << '<' << p.first << ", " << p.second << '>';
+//     return out;
+// }
+
+template <class T>
+ostream &operator<<(ostream &out, const unordered_set<T> &v)
+{
+    out << '{';
+    int v_len = v.size();
+    auto first = v.begin(), last = v.end();
+    for (auto p = first; p != last; ++p)
+    {
+        T x = *p;
+        if (p != first)
+        {
+            out << ", ";
+        }
+        //
+        out << x;
+    }
+    out << '}';
+    return out;
+}
+
 template <>
 ostream &operator<<(ostream &out, const vector<int> &v)
 {
