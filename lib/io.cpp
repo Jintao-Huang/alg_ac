@@ -22,12 +22,12 @@ ostream &operator<<(ostream &out, const vector<T> &v)
     return out;
 }
 
-// template <class T1, class T2>
-// ostream &operator<<(ostream &out, const pair<T1, T2> &p)
-// {
-//     out << '<' << p.first << ", " << p.second << '>';
-//     return out;
-// }
+template <class T1, class T2>
+ostream &operator<<(ostream &out, const pair<T1, T2> &p)
+{
+    out << "pair([" << p.first << ", " << p.second << "])";
+    return out;
+}
 
 template <class T>
 ostream &operator<<(ostream &out, const unordered_set<T> &v)

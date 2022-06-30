@@ -183,7 +183,7 @@ bool binary_search(ForwardIterator first, ForwardIterator last,
 {
     // first一定 >= val
     first = lower_bound(first, last, val);
-    return (first != last && not(comp(val, *first)));
+    return (first != last and not(comp(val, *first)));
 }
 
 // merge

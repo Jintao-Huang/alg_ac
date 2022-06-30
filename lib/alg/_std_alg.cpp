@@ -4,9 +4,9 @@
 
 #include "../load_modules.cpp"
 #include "../io.cpp"
-#include "std_alg/non_modifying_seq.cpp"
-#include "std_alg/modifying_seq.cpp"
-#include "std_alg/other.cpp"
+#include "_std_alg/non_modifying_seq.cpp"
+#include "_std_alg/modifying_seq.cpp"
+#include "_std_alg/other.cpp"
 
 template <class T>
 unordered_set<T> &update(unordered_set<T> &s, unordered_set<T> &s2)

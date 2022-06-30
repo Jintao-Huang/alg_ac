@@ -1,6 +1,6 @@
 
 
-#include "std_pre.cpp"
+#include "pre.cpp"
 class Solution
 {
 public:
