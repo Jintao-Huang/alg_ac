@@ -62,6 +62,7 @@ int largestRectangleArea(vector<int> &heights)
 }
 
 class Solution
+// 使用84的方法, 单调栈. 
 {
 public:
     int maximalRectangle(vector<vector<char>> &char_matrix)

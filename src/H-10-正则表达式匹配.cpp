@@ -11,6 +11,7 @@ public:
         // aa, a*比较. 如果p[1]=='*' and s[1]==p[0], 则dp[2][2] = dp[1][2]
         // a, aa*比较. 如果p[2]=='*', 则dp[1][3] = dp[1][1]
         // dp[0][0]是true, dp[1..][0]为false. dp[0][1..]
+        // dp[0][0], 0是开区间, 代表""
         int m = s.size() + 1, n = p.size() + 1;
         vector<vector<bool>> dp(m, vector<bool>(n));
         // 初始化

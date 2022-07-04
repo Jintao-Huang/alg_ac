@@ -8,6 +8,7 @@ public:
     {
         // 插入w1一个字符等价于删除w2一个字符
         // 有dp[m+1][n+1], m=len(w1), n=len(w2)
+        //  dp代表开区间. dp[m][n]
         //  dp[0][j]=j; dp[i][0]=i;
         //  若w1[i]==w2[j]: dp[i][j] = dp[i-1][j-1]
         //  若不等, dp[i][j]=min(删w2: dp[i][j-1], 删w1: dp[i-1][j], 替换: dp[i-1][j-1]) +1

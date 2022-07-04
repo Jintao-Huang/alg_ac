@@ -125,7 +125,7 @@ struct TreeNode
 
 bool _is_null(const string &s, int &p)
 {
-    int null_len = 4;
+    const int null_len = 4;
     char null_str[null_len + 1] = "null";
     for (int i = 0; i < null_len; ++i)
     {
