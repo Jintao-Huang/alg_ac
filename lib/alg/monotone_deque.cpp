@@ -12,7 +12,7 @@ vector<int> &next_gt(const vector<int> &v, vector<int> &dst)
 {
     // 由于要求下一个比当前元素更大的元素的索引
     // 所以需要一个单调递减的栈.
-    // 因为当一个比栈顶元素更大的值出现时, 它具有更近且更大的特征, 所以栈顶元素没有价值, 可以删除.
+    // [^]因为当一个比栈顶元素更大的值出现时, 它具有更近且更大的特征, 所以栈顶元素没有价值, 可以删除.
     // 遍历v的顺序使用倒序遍历
     ///
     // 若改为prev_gt, 则改变迭代方向
@@ -20,14 +20,7 @@ vector<int> &next_gt(const vector<int> &v, vector<int> &dst)
     // 若next_lt: 则将while循环的 <= 改为 >=, 即为单调递增栈
     int n = v.size();
 
-    if (dst.size() == 0)
-    {
-        dst.resize(n);
-    }
-    else
-    {
-        assert(dst.size() == n);
-    }
+    assert(dst.size() == n);
     vector<int> st; // stack
     for (int i = n - 1; i >= 0; --i)
     {
@@ -51,6 +44,88 @@ vector<int> &next_gt(const vector<int> &v, vector<int> &dst)
     return dst;
 }
 
+void prev_ge_next_gt(const vector<int> &v, vector<int> &prev_dst, vector<int> &next_dst)
+{
+    // 由于要求前后一个比当前元素更大的元素的索引,
+    // 需要一个单调非递增栈.
+    // 优点: 同时确定一个元素的prev_ge, next_gt
+    int n = v.size();
+    assert(prev_dst.size() == n and next_dst.size() == n);
+    vector<int> st; // stack
+    for (int i = 0; i < n; ++i)
+    {
+        //
+        int val = v[i];
+        while (not st.empty() and v[st.back()] < val)
+        {
+            // 弹出则说明
+            int x = st.back();
+            st.pop_back();
+            next_dst[x] = i;
+            if (not st.empty())
+            {
+                prev_dst[x] = st.back();
+            }
+            else
+            {
+                prev_dst[x] = -1;
+            }
+        }
+
+        st.push_back(i);
+    }
+    while (not st.empty())
+    {
+        int x = st.back();
+        st.pop_back();
+        next_dst[x] = -1;
+        if (not st.empty())
+        {
+            prev_dst[x] = st.back();
+        }
+        else
+        {
+            prev_dst[x] = -1;
+        }
+    }
+}
+
+void prev_ge_next_gt2(const vector<int> &v, vector<int> &prev_dst, vector<int> &next_dst)
+{
+    // 由于要求前后一个比当前元素更大的元素的索引,
+    // 需要一个单调非递增栈.
+    int n = v.size();
+    assert(prev_dst.size() == n and next_dst.size() == n);
+    vector<int> st; // stack
+    for (int i = 0; i < n; ++i)
+    {
+        //
+        int val = v[i];
+        while (not st.empty() and v[st.back()] < val)
+        {
+            // 弹出则说明
+            int x = st.back();
+            st.pop_back();
+            next_dst[x] = i;
+        }
+        if (not st.empty())
+        {
+            prev_dst[i] = st.back();
+        }
+        else
+        {
+            prev_dst[i] = -1;
+        }
+        st.push_back(i);
+    }
+    while (not st.empty())
+    {
+        int x = st.back();
+        st.pop_back();
+        next_dst[x] = -1;
+    }
+}
+
 /// 下一个>=该元素的最小值的索引
 vector<int> &next_ge_min(const vector<int> &v, vector<int> &dst)
 {
@@ -59,14 +134,7 @@ vector<int> &next_ge_min(const vector<int> &v, vector<int> &dst)
     // 排序: 满足下一个元素即为 >= 该值的最小值, 但是不保证在该元素之后
     // 所以需要用单调栈寻找最近的 > arg的值
     int n = v.size();
-    if (dst.size() == 0)
-    {
-        dst.resize(n);
-    }
-    else
-    {
-        assert(dst.size() == n);
-    }
+    assert(dst.size() == n);
     vector<int> arg(n);
     for (int i = 0; i < n; ++i)
     {
@@ -76,7 +144,7 @@ vector<int> &next_ge_min(const vector<int> &v, vector<int> &dst)
     stable_sort(arg.begin(), arg.end(), [&v](int i, int j) -> bool
                 { return v[i] < v[j]; });
     // 对arg做: 下一个>的索引
-    vector<int> ngt;
+    vector<int> ngt(arg.size());
     next_gt(arg, ngt);
     // dst的格式转化.
     // 原来存储的是arg中某元素的下一个>其的索引.
@@ -98,14 +166,7 @@ vector<int> &next_k_max(const vector<int> &v, int k, vector<int> &dst)
     ///
     // 若不含当前位置, 则求max的操作(操作3)需要在加入当前元素之前(操作1前); 记得判断empty()
     int n = v.size();
-    if (dst.size() == 0)
-    {
-        dst.resize(n);
-    }
-    else
-    {
-        assert(dst.size() == n);
-    }
+    assert(dst.size() == n);
     deque<int> dq;
     for (int i = n - 1; i >= 0; --i)
     {
@@ -119,7 +180,7 @@ vector<int> &next_k_max(const vector<int> &v, int k, vector<int> &dst)
         }
         dq.push_back(i);
         // 距离.
-        while (dq.front() - i + 1 > k) // dq.empty()一定不成立
+        while (dq.front() - i + 1 > k) // dq.empty()一定不成立(因为有当前元素加入)
         {
             dq.pop_front();
         }
@@ -137,14 +198,7 @@ vector<int> &next_k_max(const vector<int> &v, int k, vector<int> &dst)
 vector<int> &prev_k_max(const vector<int> &v, int k, vector<int> &dst)
 {
     int n = v.size();
-    if (dst.size() == 0)
-    {
-        dst.resize(n);
-    }
-    else
-    {
-        assert(dst.size() == n);
-    }
+    assert(dst.size() == n);
     deque<int> dq;
     for (int i = 0; i < n; ++i)
     {
@@ -156,7 +210,7 @@ vector<int> &prev_k_max(const vector<int> &v, int k, vector<int> &dst)
         }
         dq.push_back(i);
         // 距离.
-        while (i - dq.front()+ 1 > k) // dq.empty()一定不成立
+        while (i - dq.front() + 1 > k) // dq.empty()一定不成立
         {
             dq.pop_front();
         }
@@ -170,22 +224,39 @@ vector<int> &prev_k_max(const vector<int> &v, int k, vector<int> &dst)
 // {
 //     {
 //         vector<int> nums = {3, 4, 2, 2, 5, 4};
-//         vector<int> dst;
+//         vector<int> dst(nums.size());
 //         cout << next_gt(nums, dst) << '\n';
+//         // [1, 4, 4, 4, -1, -1]
 //     }
 //     {
 //         vector<int> nums = {3, 4, 2, 2, 5, 4};
-//         vector<int> dst;
+//         vector<int> prev_dst(nums.size());
+//         vector<int> next_dst(nums.size());
+//         prev_ge_next_gt(nums, prev_dst, next_dst);
+//         cout << prev_dst << next_dst << '\n';
+//         // [-1, -1, 1, 2, -1, 4][1, 4, 4, 4, -1, -1]
+//     }
+//     {
+//         vector<int> nums = {3, 4, 2, 2, 5, 4};
+//         vector<int> prev_dst(nums.size());
+//         vector<int> next_dst(nums.size());
+//         prev_ge_next_gt2(nums, prev_dst, next_dst);
+//         cout << prev_dst << next_dst << '\n';
+//         // [-1, -1, 1, 2, -1, 4][1, 4, 4, 4, -1, -1]
+//     }
+//     {
+//         vector<int> nums = {3, 4, 2, 2, 5, 4};
+//         vector<int> dst(nums.size());
 //         cout << next_ge_min(nums, dst) << '\n';
+//         // [1, 5, 3, 5, -1, -1]
 //     }
-//     // [1, 4, 4, 4, -1, -1]
-//     // [1, 5, 3, 5, -1, -1]
+
 //     {
 //         vector<int> nums = {3, 4, 2, 2, 5, 4};
-//         vector<int> dst;
+//         vector<int> dst(nums.size());
 //         cout << next_k_max(nums, 2, dst) << '\n';
+//         // [1, 1, 2, 4, 4, 5]
 //     }
-//     // [1, 1, 2, 4, 4, 5]
 // }
 
 #endif

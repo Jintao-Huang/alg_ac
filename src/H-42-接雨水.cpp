@@ -65,9 +65,45 @@ public:
     }
 };
 
+class Solution3
+// 单调栈
+{
+public:
+    int trap(vector<int> &height)
+    {
+        // 找某元素(栈顶元素)前面最近大于等于该元素的元素索引(单调栈的栈顶的前一个元素),
+        //  递减栈
+        //  后面最近大于该元素的元素索引(弹出时i)
+        // 若当前元素大于等于栈顶元素, 则不断弹出栈, 直到无法弹出. 最后更新res, 加入栈
+        //
+        int n = height.size();
+        vector<int> stack; // 存索引
+        int res = 0;
+        for (int i = 0; i < n; ++i)
+        {
+            int x = height[i];
+            while (not stack.empty() and x > height[stack.back()])
+            {
+
+                int curr = stack.back();
+                stack.pop_back();
+                if (not stack.empty())
+                {
+                    int lo = stack.back();
+                    int w = i - lo - 1;
+                    int h = min(height[i], height[lo]) - height[curr];
+                    res += w * h;
+                }
+            }
+            stack.push_back(i);
+        }
+        return res;
+    }
+};
 int main()
 {
     vector<int> height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
     cout << Solution().trap(height) << '\n';
     cout << Solution2().trap(height) << '\n';
+    cout << Solution3().trap(height) << '\n';
 }
