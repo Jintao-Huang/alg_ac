@@ -3,6 +3,31 @@
 #define _BUILD_DS
 #include "load_modules.cpp"
 #include "io.cpp"
+template <class T>
+struct MPool
+{
+    // 内存池
+    vector<T *> buf;
+    template <class... Args>
+    T *create(Args... args)
+    {
+        buf.push_back(new T(args...));
+        return buf.back();
+    }
+    void clear()
+    {
+        int n = buf.size();
+        for (int i = 0; i < n; ++i)
+        {
+            delete buf[i];
+        }
+        buf.clear();
+    }
+    ~MPool()
+    {
+        clear();
+    }
+};
 
 /* List */
 struct ListNode
@@ -13,6 +38,8 @@ struct ListNode
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+
+MPool<ListNode> _mpool_ln;
 
 int _get_number(const string &s, int &p)
 {
@@ -85,11 +112,11 @@ ListNode *str_to_list(const string &s)
     }
     ListNode *head, *p;
     // 直接赋第一个
-    head = p = new ListNode(v[0]);
+    head = p = _mpool_ln.create(v[0]);
     for (int i = 1; i < v_len; ++i)
     {
         int x = v[i];
-        p->next = new ListNode(x);
+        p->next = _mpool_ln.create(x);
         p = p->next;
     }
     return head;
@@ -123,6 +150,7 @@ struct TreeNode
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+MPool<TreeNode> _mpool_tn;
 bool _is_null(const string &s, int &p)
 {
     const int null_len = 4;
@@ -147,7 +175,7 @@ vector<TreeNode *> &_str_to_tn_vector(const string &s, vector<TreeNode *> &dst)
         if (isdigit(c))
         {
             int x = _get_number(s, i);
-            dst.push_back(new TreeNode(x));
+            dst.push_back(_mpool_tn.create(x));
         }
         else if (_is_null(s, i))
         {

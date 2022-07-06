@@ -7,7 +7,7 @@ public:
     vector<string> res;
     int min_change = INT32_MAX;
 
-    void dfs(const string &s, string &path, int i, int left, int right, int change)
+    void bktrace(const string &s, string &path, int i, int left, int right, int change)
     {
         int n = s.size();
         if ((right > left) or (n - i + left < right))
@@ -43,24 +43,24 @@ public:
         {
             // 选择
             path.push_back('(');
-            dfs(s, path, i + 1, left + 1, right, change);
+            bktrace(s, path, i + 1, left + 1, right, change);
             path.pop_back();
             // 不选择
-            dfs(s, path, i + 1, left, right, change + 1);
+            bktrace(s, path, i + 1, left, right, change + 1);
         }
         else if (s[i] == ')')
         {
             // 选择
             path.push_back(')');
-            dfs(s, path, i + 1, left, right + 1, change);
+            bktrace(s, path, i + 1, left, right + 1, change);
             path.pop_back();
             // 不选择
-            dfs(s, path, i + 1, left, right, change + 1);
+            bktrace(s, path, i + 1, left, right, change + 1);
         }
         else
         { // 其他字符
             path.push_back(s[i]);
-            dfs(s, path, i + 1, left, right, change);
+            bktrace(s, path, i + 1, left, right, change);
             path.pop_back();
         }
     }
@@ -72,7 +72,7 @@ public:
         // 出现更少的 change数, 则clear res, 存入.
         // 需要进行集合去重
         string path;
-        dfs(s, path, 0, 0, 0, 0);
+        bktrace(s, path, 0, 0, 0, 0);
         // 去重
         unordered_set<string> tmp(res.begin(), res.end());
         return vector<string>(tmp.begin(), tmp.end());

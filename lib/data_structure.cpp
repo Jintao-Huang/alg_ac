@@ -6,4 +6,5 @@
 #include "data_structure/union_find.cpp"
 #include "data_structure/segment_tree.cpp"
 #include "data_structure/string_hasher.cpp"
+#include "data_structure/trie.cpp"
 #endif
