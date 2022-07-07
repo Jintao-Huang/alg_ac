@@ -18,6 +18,23 @@ MPool<TrieTreeNode> _mpool_ttn;
 
 class Trie
 {
+private:
+    TrieTreeNode *search_prefix(const string &word)
+    {
+        int n = word.size();
+        TrieTreeNode *p = root;
+        for (int i = 0; i < n; ++i)
+        {
+            char ch = word[i];
+            if (not p->children.count(ch))
+            {
+                return nullptr;
+            }
+            p = p->children[ch];
+        }
+        return p;
+    }
+
 public:
     TrieTreeNode *root;
     Trie()
@@ -39,10 +56,6 @@ public:
             {
                 p->children[ch] = _mpool_ttn.create(ch);
             }
-            else
-            {
-                // 算法完整性
-            }
             p = p->children[ch];
         }
         p->finish = true;
@@ -53,35 +66,13 @@ public:
         // 直到word遍历完/无法走下去
         // 若word遍历完: 判断当前节点是否是finish节点. 若是: 则返回true. 否则false
         // 无法走下去, 则返回false
-        int n = word.size();
-        TrieTreeNode *p = root;
-        for (int i = 0; i < n; ++i)
-        {
-            char ch = word[i];
-            if (not p->children.count(ch))
-            {
-                return false;
-            }
-            p = p->children[ch];
-        }
-        return p->finish;
+        TrieTreeNode *p = search_prefix(word);
+        return p and p->finish;
     }
     bool starts_with(const string &prefix)
     {
-        const string &word = prefix; // 别名
-        // 只改变search的return语句
-        int n = word.size();
-        TrieTreeNode *p = root;
-        for (int i = 0; i < n; ++i)
-        {
-            char ch = word[i];
-            if (not p->children.count(ch))
-            {
-                return false;
-            }
-            p = p->children[ch];
-        }
-        return true;
+        TrieTreeNode *p = search_prefix(prefix);
+        return p;
     }
 };
 

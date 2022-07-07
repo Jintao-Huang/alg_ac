@@ -15,8 +15,12 @@
 #include <tuple>
 #include <algorithm>
 #include <cassert>
+#include <set>
+#include <map>
+#include <queue>
 
 using namespace std;
 //
+
 #define INT32_NULL INT32_MIN
 #endif

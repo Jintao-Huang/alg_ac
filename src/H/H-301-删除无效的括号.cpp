@@ -10,7 +10,7 @@ public:
     void bktrace(const string &s, string &path, int i, int left, int right, int change)
     {
         int n = s.size();
-        if ((right > left) or (n - i + left < right))
+        if ((right > left) or (n - i + right < left))
         {
             return;
         }
@@ -65,7 +65,7 @@ public:
         }
     }
 
-    vector<string> removeInvalidParentheses(string s)
+    vector<string> removeInvalidParentheses(string &s)
     {
         // 使用回溯法
         // 所有的符号都有删除和不删除两个选择, 遍历所有的选择, 若某种选择. left==right则符合. 存入开始的索引和长度.

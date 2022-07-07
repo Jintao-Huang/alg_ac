@@ -10,15 +10,17 @@ class OrderedSet
 };
 
 class OrderedMap
+// 使用hashmap指向list节点的方法.
 {
 private:
-    using list_pair = list<pair<int, int>>;
+    using list_pair = list<pair<int, int>>; // 存储k, v
     list_pair l;
-    unordered_map<int, list_pair::iterator> um;
+    unordered_map<int, list_pair::iterator> um; // 存储k, ListNode
 
 public:
     int &operator[](int i)
     {
+        // 访问即赋值.
         if (um.count(i) == 0)
         {
             // 插入
@@ -61,8 +63,8 @@ public:
     void move_to_end(int k, bool to_end = true)
     {
         int v = (*this)[k];
-        this->erase(k);
-        (*this)[k] = v;
+        this->erase(k); // erase的时候会把listnode
+        (*this)[k] = v; // 重新生成listnode
     }
 
     int count(int k)
