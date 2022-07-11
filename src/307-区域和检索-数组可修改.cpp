@@ -8,7 +8,7 @@ public:
 
     void update(int index, int val)
     {
-        st.update(index, index, val);
+        st.update(index, val);
     }
 
     int sumRange(int left, int right)
@@ -17,11 +17,53 @@ public:
     }
 };
 
+class NumArray2
+{
+public:
+    BinaryIndexedTree bit;
+    vector<int> nums;
+    NumArray2(vector<int> &nums) : bit(nums), nums(nums) {}
+
+    void update(int index, int val)
+    {
+
+        int diff = val - nums[index];
+        nums[index] = val;
+        bit.update(index, diff);
+    }
+
+    int sumRange(int left, int right)
+    {
+        return bit.sum_range(left, right);
+    }
+};
+
 int main()
 {
-    vector<int> v({1, 3, 5});
-    NumArray numArray(v);
-    cout << numArray.sumRange(0, 2); // 返回 1 + 3 + 5 = 9
-    numArray.update(1, 2);           // nums = [1,2,5]
-    cout << numArray.sumRange(0, 2); // 返回 1 + 2 + 5 = 8
+    vector<int> v({5, 18, 13});
+    NumArray arr(v);
+    cout << arr.sumRange(0, 2);
+    arr.update(1, -1);
+    cout << arr.sumRange(0, 2);
+    arr.update(2, 3);
+    cout << arr.sumRange(0, 2);
+    arr.update(0, 5);
+    cout << arr.sumRange(0, 2);
+    arr.update(0, -4);
+    cout << arr.sumRange(0, 2);
+    cout << '\n';
+
+    {
+        vector<int> v({5, 18, 13});
+        NumArray2 arr(v);
+        cout << arr.sumRange(0, 2);
+        arr.update(1, -1);
+        cout << arr.sumRange(0, 2);
+        arr.update(2, 3);
+        cout << arr.sumRange(0, 2);
+        arr.update(0, 5);
+        cout << arr.sumRange(0, 2);
+        arr.update(0, -4);
+        cout << arr.sumRange(0, 2);
+    }
 }

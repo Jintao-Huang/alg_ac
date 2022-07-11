@@ -9,16 +9,6 @@
 #include "alg/heap.cpp"
 #include "alg/set.cpp"
 #include "alg/list.cpp"
-
-vector<int> &range(int hi, vector<int> &dst)
-// step=0. [0..hi)
-{
-    dst.reserve(hi);
-    for (int i = 0; i < hi; ++i)
-    {
-        dst.push_back(i);
-    }
-    return dst;
-}
+#include "alg/utils.cpp"
 
 #endif

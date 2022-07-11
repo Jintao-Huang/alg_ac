@@ -30,12 +30,12 @@ public:
         }
         return parent[a];
     }
-    int size(int a)
+    inline int size(int a)
     {
         // 查看某uf_set的大小
         return sizes[parent[a]];
     }
-    int size()
+    inline int size()
     {
         // 返回uf_set的数量
         return cnt;
@@ -57,7 +57,6 @@ public:
         {
             sizes[rb] += sizes[ra];
             parent[ra] = rb;
-            ;
         }
         cnt -= 1;
         return true;

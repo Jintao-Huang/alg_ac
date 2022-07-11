@@ -19,8 +19,7 @@ vector<int> &next_gt(const vector<int> &v, vector<int> &dst)
     // 若next_ge: 则将while循环的 <= 改为 <, 即为单调不增栈
     // 若next_lt: 则将while循环的 <= 改为 >=, 即为单调递增栈
     int n = v.size();
-
-    assert(dst.size() == n);
+    dst.resize(n);
     vector<int> st; // stack
     for (int i = n - 1; i >= 0; --i)
     {
@@ -50,7 +49,8 @@ void prev_ge_next_gt(const vector<int> &v, vector<int> &prev_dst, vector<int> &n
     // 需要一个单调非递增栈.
     // 优点: 同时确定一个元素的prev_ge, next_gt
     int n = v.size();
-    assert(prev_dst.size() == n and next_dst.size() == n);
+    prev_dst.resize(n);
+    next_dst.resize(n);
     vector<int> st; // stack
     for (int i = 0; i < n; ++i)
     {
@@ -95,7 +95,8 @@ void prev_ge_next_gt2(const vector<int> &v, vector<int> &prev_dst, vector<int> &
     // 由于要求前后一个比当前元素更大的元素的索引,
     // 需要一个单调非递增栈.
     int n = v.size();
-    assert(prev_dst.size() == n and next_dst.size() == n);
+    prev_dst.resize(n);
+    next_dst.resize(n);
     vector<int> st; // stack
     for (int i = 0; i < n; ++i)
     {
@@ -134,7 +135,7 @@ vector<int> &next_ge_min(const vector<int> &v, vector<int> &dst)
     // 排序: 满足下一个元素即为 >= 该值的最小值, 但是不保证在该元素之后
     // 所以需要用单调栈寻找最近的 > arg的值
     int n = v.size();
-    assert(dst.size() == n);
+    dst.resize(n);
     vector<int> arg(n);
     for (int i = 0; i < n; ++i)
     {
@@ -166,7 +167,7 @@ vector<int> &next_k_max(const vector<int> &v, int k, vector<int> &dst)
     ///
     // 若不含当前位置, 则求max的操作(操作3)需要在加入当前元素之前(操作1前); 记得判断empty()
     int n = v.size();
-    assert(dst.size() == n);
+    dst.resize(n);
     deque<int> dq;
     for (int i = n - 1; i >= 0; --i)
     {
@@ -198,7 +199,7 @@ vector<int> &next_k_max(const vector<int> &v, int k, vector<int> &dst)
 vector<int> &prev_k_max(const vector<int> &v, int k, vector<int> &dst)
 {
     int n = v.size();
-    assert(dst.size() == n);
+    dst.resize(n);
     deque<int> dq;
     for (int i = 0; i < n; ++i)
     {
@@ -218,6 +219,36 @@ vector<int> &prev_k_max(const vector<int> &v, int k, vector<int> &dst)
         dst[i] = dq.front(); // dq.empty()一定不成立
     }
     return dst;
+}
+
+// [862]
+template <class T>
+int prev_le_k(const vector<T> &v, int k)
+{
+    // 找前面最近的 小于等于(当前元素-k)的索引. 即: v[j] <= v[k] - k.
+    // 所以若k>0; 则为单调递增栈.
+    // 返回max(hi-lo). 所以可以使用单调队列. 若找到dq.front()满足, 则可以弹出, 因为这是单调递增栈.
+    // dq=[1,2,3,4], 5
+    int n = v.size();
+    deque<int> dq;
+    int res = INT32_MAX;
+    for (int i = 0; i < n; ++i)
+    {
+        T val = v[i];
+        while (not dq.empty() and v[dq.back()] >= val)
+        {
+            dq.pop_back();
+        }
+        dq.push_back(i);
+        int lo;
+        while (not dq.empty() and v[lo = dq.front()] <= val - k)
+        {
+            // front满足
+            res = min(res, i - lo);
+            dq.pop_front();
+        }
+    }
+    return res != INT32_MAX ? res : -1;
 }
 
 // int main()

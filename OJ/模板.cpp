@@ -5,6 +5,6 @@ typedef long long LL;
 
 int main()
 {
-    freopen("in.txt", "r", stdin);
+    freopen("in", "r", stdin);
     return 0;
 }

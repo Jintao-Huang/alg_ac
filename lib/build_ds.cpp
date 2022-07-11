@@ -83,6 +83,12 @@ vector<vector<int>> &str_to_matrix(const string &s, vector<vector<int>> &dst)
     }
     ++i;
     int s_len = s.size();
+    // 去除最后一个]
+    while (s[s_len - 1] != ']')
+    { // 去除第一个的[
+        --s_len;
+    }
+    --s_len;
     int start;
     for (; i < s_len; ++i)
     {
@@ -94,7 +100,7 @@ vector<vector<int>> &str_to_matrix(const string &s, vector<vector<int>> &dst)
         {
             vector<int> v;
             str_to_vector(s.substr(start, i - start + 1), v);
-            dst.push_back(v);
+            dst.emplace_back(v);
         }
     }
     return dst;

@@ -27,7 +27,7 @@ ostream &operator<<(ostream &out, const vector<T> &v)
 template <class T1, class T2>
 ostream &operator<<(ostream &out, const pair<T1, T2> &p)
 {
-    out << "pair([" << p.first << ", " << p.second << "])";
+    out << "pair(" << p.first << ", " << p.second << ")";
     return out;
 }
 
@@ -111,8 +111,8 @@ ostream &operator<<(ostream &out, const unordered_map<T1, T2> &um)
 //     cout << um2 << '\n';
 //     vector<vector<char>> m = {{'X', 'O', 'X'}, {'O', 'X', 'X'}};
 //     cout << m << '\n';
-//     // [pair([#45, 5]), pair([123, 1])]
-//     // [pair([3, 5]), pair([2, 1])]
+//     // [pair(#45, 5), pair(123, 1)]
+//     // [pair(3, 5), pair(2, 1)]
 //     // [[X, O, X], [O, X, X]]
 // }
 
