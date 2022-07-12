@@ -4,21 +4,37 @@
 #include "load_modules.cpp"
 
 /// vector
-template <class T>
-ostream &operator<<(ostream &out, const vector<T> &v)
+
+template <class InputIterator>
+ostream &print(ostream &out, InputIterator first, InputIterator last)
 {
-    out << '[';
-    int v_len = v.size();
-    for (int i = 0; i < v_len; ++i)
+    for (auto it = first; it != last; ++it)
     {
-        T x = v[i];
-        if (i != 0)
+        typename iterator_traits<InputIterator>::value_type x = *it;
+        if (it != first)
         {
             out << ", ";
         }
         //
         out << x;
     }
+    return out;
+}
+
+template <class T>
+ostream &operator<<(ostream &out, const vector<T> &v)
+{
+    out << '[';
+    print(out, v.begin(), v.end());
+    out << ']';
+    return out;
+}
+
+template <class T, size_t N>
+ostream &operator<<(ostream &out, const array<T, N> &arr)
+{
+    out << '[';
+    print(out, arr.begin(), arr.end());
     out << ']';
     return out;
 }
@@ -33,21 +49,10 @@ ostream &operator<<(ostream &out, const pair<T1, T2> &p)
 
 /// unordered_set
 template <class T>
-ostream &operator<<(ostream &out, const unordered_set<T> &v)
+ostream &operator<<(ostream &out, const unordered_set<T> &us)
 {
     out << '{';
-    int v_len = v.size();
-    auto first = v.begin(), last = v.end();
-    for (auto p = first; p != last; ++p)
-    {
-        T x = *p;
-        if (p != first)
-        {
-            out << ", ";
-        }
-        //
-        out << x;
-    }
+    print(out, us.begin(), us.end());
     out << '}';
     return out;
 }
@@ -80,21 +85,13 @@ ostream &operator<<(ostream &out, const vector<int> &v)
 }
 
 /// unordered_map
-template <class T1, class T2>
-vector<pair<T1, T2>> &_unordered_map_to_vector(const unordered_map<T1, T2> &um, vector<pair<T1, T2>> &dst)
-{
-    for (typename unordered_map<T1, T2>::const_iterator it = um.begin(); it != um.end(); ++it)
-    {
-        dst.emplace_back(*it);
-    }
-    return dst;
-}
 
 template <class T1, class T2>
 ostream &operator<<(ostream &out, const unordered_map<T1, T2> &um)
 {
-    vector<pair<T1, T2>> vp;
-    out << _unordered_map_to_vector(um, vp);
+    out << '{';
+    print(out, um.begin(), um.end());
+    out << '}';
     return out;
 }
 

@@ -1,5 +1,5 @@
-bin/
-.vscode/
-leetcode.md
-test.cpp
-竞赛/
+/bin/
+/.vscode/
+/test/
+/leetcode/contest/
+/alg_ac.md

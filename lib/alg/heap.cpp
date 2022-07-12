@@ -14,8 +14,7 @@ void make_heap(vector<int> &heap, function<bool(int, int)> comp = nullptr)
 {
     if (comp == nullptr)
     {
-        comp = [](int x, int y) -> bool
-        { return x < y; };
+        comp = less<int>();
     }
     make_heap(heap.begin(), heap.end(), comp);
 }
@@ -24,8 +23,7 @@ void push_heap(vector<int> &heap, int x, function<bool(int, int)> comp = nullptr
 {
     if (comp == nullptr)
     {
-        comp = [](int x, int y) -> bool
-        { return x < y; };
+        comp = less<int>();
     }
     heap.push_back(x);
     push_heap(heap.begin(), heap.end(), comp);
@@ -35,8 +33,7 @@ void pop_heap(vector<int> &heap, function<bool(int, int)> comp = nullptr)
 {
     if (comp == nullptr)
     {
-        comp = [](int x, int y) -> bool
-        { return x < y; };
+        comp = less<int>();
     }
     pop_heap(heap.begin(), heap.end(), comp);
     heap.pop_back();
@@ -46,8 +43,7 @@ int replace_heap(vector<int> &heap, int x, function<bool(int, int)> comp = nullp
 {
     if (comp == nullptr)
     {
-        comp = [](int x, int y) -> bool
-        { return x < y; };
+        comp = less<int>();
     }
     if (heap.size() > 0)
     {
