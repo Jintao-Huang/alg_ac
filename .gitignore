@@ -1,6 +1,10 @@
 /bin/
+/build/
 /.vscode/
 /test/
 /leetcode/contest/
 /doc/
-/OJ/in
+/trash/
+/home-cuda/
+/home-libtorch/
+/acWing/in
