@@ -1,3 +1,6 @@
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
 
 #ifndef _SORT
 #define _SORT

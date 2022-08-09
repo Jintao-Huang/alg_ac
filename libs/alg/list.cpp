@@ -1,3 +1,7 @@
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
+
 #ifndef _LIST
 #define _LIST
 #include "../build_ds.cpp"

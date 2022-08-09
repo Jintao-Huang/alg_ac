@@ -1,3 +1,7 @@
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
+
 #ifndef _IO
 #define _IO
 
@@ -6,7 +10,7 @@
 /// vector
 
 template <class InputIterator>
-ostream &print(ostream &out, InputIterator first, InputIterator last)
+ostream &_print(ostream &out, InputIterator first, InputIterator last)
 {
     for (auto it = first; it != last; ++it)
     {
@@ -25,7 +29,7 @@ template <class T>
 ostream &operator<<(ostream &out, const vector<T> &v)
 {
     out << '[';
-    print(out, v.begin(), v.end());
+    _print(out, v.begin(), v.end());
     out << ']';
     return out;
 }
@@ -34,25 +38,19 @@ template <class T, size_t N>
 ostream &operator<<(ostream &out, const array<T, N> &arr)
 {
     out << '[';
-    print(out, arr.begin(), arr.end());
+    _print(out, arr.begin(), arr.end());
     out << ']';
     return out;
 }
 
-/// pair
-template <class T1, class T2>
-ostream &operator<<(ostream &out, const pair<T1, T2> &p)
-{
-    out << "pair(" << p.first << ", " << p.second << ")";
-    return out;
-}
+
 
 /// unordered_set
 template <class T>
 ostream &operator<<(ostream &out, const unordered_set<T> &us)
 {
     out << '{';
-    print(out, us.begin(), us.end());
+    _print(out, us.begin(), us.end());
     out << '}';
     return out;
 }
@@ -89,8 +87,19 @@ ostream &operator<<(ostream &out, const vector<int> &v)
 template <class T1, class T2>
 ostream &operator<<(ostream &out, const unordered_map<T1, T2> &um)
 {
+    auto first = um.begin();
+    auto last = um.end();
     out << '{';
-    print(out, um.begin(), um.end());
+    for (auto it = first; it != last; ++it)
+    {
+        auto x = *it;
+        if (it != first)
+        {
+            out << ", ";
+        }
+        //
+        out << x.first << ':' << x.second;
+    }
     out << '}';
     return out;
 }
@@ -101,7 +110,7 @@ ostream &operator<<(ostream &out, const unordered_map<T1, T2> &um)
 //     um["123"] = 1;
 //     um["#45"] = 5;
 //     cout << um << '\n';
-//     //
+    
 //     unordered_map<int, int> um2;
 //     um2[2] = 1;
 //     um2[3] = 5;

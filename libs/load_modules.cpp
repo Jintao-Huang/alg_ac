@@ -20,7 +20,6 @@
 #include <queue>
 
 using namespace std;
-//
 
 #define INT32_NULL INT32_MIN
 #endif

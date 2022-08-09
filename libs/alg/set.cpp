@@ -1,3 +1,7 @@
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
+
 #ifndef _SET
 #define _SET
 #include "../build_ds.cpp"

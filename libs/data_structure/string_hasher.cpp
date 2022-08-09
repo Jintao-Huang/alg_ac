@@ -1,3 +1,7 @@
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
+
 #ifndef _STRING_HASHER
 #define _STRING_HASHER
 

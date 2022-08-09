@@ -1,4 +1,6 @@
-
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
 
 #ifndef _MUTABLE_PQ
 #define _MUTABLE_PQ

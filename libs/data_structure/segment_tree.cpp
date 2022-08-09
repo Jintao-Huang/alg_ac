@@ -1,3 +1,7 @@
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
+
 #ifndef _SEGMENT_TREE
 #define _SEGMENT_TREE
 

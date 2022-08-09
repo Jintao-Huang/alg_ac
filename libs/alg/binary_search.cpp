@@ -1,4 +1,6 @@
-
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
 
 #ifndef _BINARY_SEARCH
 #define _BINARY_SEARCH

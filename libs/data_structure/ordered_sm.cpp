@@ -1,3 +1,6 @@
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
 
 #ifndef _ORDERED_SM
 #define _ORDERED_SM
@@ -76,19 +79,9 @@ public:
         return um.size();
     }
     //
-    vector<pair<int, int>> &to_vector(vector<pair<int, int>> &dst)
-    {
-        for (auto it = l.begin(); it != l.end(); ++it)
-        {
-            dst.emplace_back(*it);
-        }
-        return dst;
-    }
     friend ostream &operator<<(ostream &out, OrderedMap &om)
     {
-        vector<pair<int, int>> vp;
-
-        out << om.to_vector(vp);
+        out << om;
         return out;
     }
 };

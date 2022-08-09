@@ -1,6 +1,7 @@
+// Author: Jintao Huang
+// Email: hjt_study@qq.com
+// Date:
 
-
-//
 #ifndef _KNAPSACK
 #define _KNAPSACK
 
