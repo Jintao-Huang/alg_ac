@@ -85,9 +85,7 @@ void tensor_to_vector(Tensor &t, vector<T> &dst)
 double time_synchronize()
 {
     torch::cuda::synchronize();
-    chrono::time_point t = chrono::system_clock::now();
-    chrono::system_clock::duration dtn = t.time_since_epoch();
-    return dtn.count() % int64_t(1e15) / 1e9; // 避免浮点数精度问题.
+    return default_timer();
 }
 
 int64_t seed_everything(optional<int64_t> seed = nullopt, bool gpu_dtm = false)
@@ -101,7 +99,7 @@ int64_t seed_everything(optional<int64_t> seed = nullopt, bool gpu_dtm = false)
     // https://discuss.pytorch.org/t/libtorch-sequential-model-is-not-consistent-with-pytorch-sequential-model/153556/3
     if (gpu_dtm)
     {
-        // torch::globalContext().setDeterministicAlgorithms(true, false);
+        // torch::globalContext().setDeterministicAlgorithms(true, false);  // 会报错
         torch::globalContext().setDeterministicCuDNN(true);
         torch::globalContext().setBenchmarkCuDNN(false);
     }

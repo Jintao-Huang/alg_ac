@@ -4,6 +4,7 @@
 
 #ifndef _NN_FUNCTIONAL
 #define _NN_FUNCTIONAL
+// Tensor使用智能指针实现: https://pytorch.org/cppdocs/notes/maybe_owned.html
 
 #include <torch/torch.h>
 #include <iostream>
@@ -29,6 +30,7 @@ namespace F = torch::nn::functional;
 //     const int dilation = 1,
 //     const int groups = 1)
 // {
+//
 //     auto [PH, PW] = padding;
 //     if (padding != tuple<int, int>({0, 0}))
 //     {
@@ -77,6 +79,12 @@ Tensor conv2d(
     const int dilation = 1,
     const int groups = 1)
 {
+    // 1. einsum的接口速度损失较大, 可以通过. 空间换时间的方式, 以更大批的方式调用einsum.
+    // 2. einsum中会创建新的Tensor(并new新的空间), 而无法指定out, 这会造成性能损失.
+    // 3. 测试中, 在小图片中的处理速度快于F.conv2d. 在大图片中, 依旧会因为频繁调用einsum接口而慢于甚至严重慢于F.conv2d.
+    //  会略快于pytorch conv2d实现. 但是速度优势 < 2倍, 并不明显. 关键速度瓶颈在于einsum的接口调用.
+    // 4. pytorch的 F.conv2d实现与 libtorch的 F.conv2d实现的速度差距不大(相等).
+    // 5. 前一个conv2d算法, 由于频繁调用contiguous, 导致大数组的复制, 速度略慢于此函数.
     auto [PH, PW] = padding;
     if (padding != tuple<int, int>({0, 0}))
     {
