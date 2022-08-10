@@ -2,6 +2,9 @@
 // Email: hjt_study@qq.com
 // Date:
 
+#ifndef _ML_UTILS
+#define _ML_UTILS
+
 #include <chrono>
 #include <vector>
 #include <torch/torch.h>
@@ -87,7 +90,7 @@ double time_synchronize()
     return dtn.count() % int64_t(1e15) / 1e9; // 避免浮点数精度问题.
 }
 
-void seed_everything(optional<int64_t> seed = nullopt, bool gpu_dtm = false)
+int64_t seed_everything(optional<int64_t> seed = nullopt, bool gpu_dtm = false)
 {
     if (seed == nullopt)
     {
@@ -98,11 +101,12 @@ void seed_everything(optional<int64_t> seed = nullopt, bool gpu_dtm = false)
     // https://discuss.pytorch.org/t/libtorch-sequential-model-is-not-consistent-with-pytorch-sequential-model/153556/3
     if (gpu_dtm)
     {
-        torch::globalContext().setDeterministicAlgorithms(true, false);
+        // torch::globalContext().setDeterministicAlgorithms(true, false);
         torch::globalContext().setDeterministicCuDNN(true);
         torch::globalContext().setBenchmarkCuDNN(false);
     }
     cout << "Global seed set to " << seed.value() << '\n';
+    return seed.value();
 }
 
 // int main(){
@@ -115,3 +119,5 @@ void seed_everything(optional<int64_t> seed = nullopt, bool gpu_dtm = false)
 //     test_time<Tensor>(func, y, 10, 0, time_synchronize);
 //     cout << y.index({1, Slice(None, 100)});
 // }
+
+#endif
