@@ -237,7 +237,7 @@ int prim(vector<vector<int>> &graph)
 }
 
 /// dinic
-// 可以解决最大流/最小流问题; 以及二部图的无权图匹配问题.
+// 可以解决最大流/最小割问题(有向图); 以及二部图的无权图匹配问题.
 class Dinic
 {
 private:

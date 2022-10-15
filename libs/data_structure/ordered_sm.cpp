@@ -86,12 +86,12 @@ public:
     }
 };
 
-// int main(){
-//     OrderedMap om;
-//     om[0] = 1;
-//     om[0] = 2;
-//     om[2] = 3;
-//     om[0] = 2;
-//     cout << om << '\n';
-// }
+int main(){
+    OrderedMap om;
+    om[0] = 1;
+    om[0] = 2;
+    om[2] = 3;
+    om[0] = 2;
+    cout << om << '\n';
+}
 #endif

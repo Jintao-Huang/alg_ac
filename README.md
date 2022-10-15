@@ -2,7 +2,8 @@
 
 ## Introduction
 1. 这个仓库是一个C++的传统算法, 机器学习算法集成库, 现在主要是自己在使用. 传统算法所在文件夹为`libs/`, 机器学习算法在`ml_libs/`. 下面将会介绍各个文件的用途. 
-
+2. python版本的传统算法见: [https://github.com/Jintao-Huang/ml_alg](https://github.com/Jintao-Huang/ml_alg)
+3. 该仓库暂时不再维护, 将重写并优化成`2`中的python版本. (2022-9-27)
 
 
 
@@ -16,6 +17,6 @@
 
 
 
-## 环境:
+## 环境
 1. c++17
 2. libtorch==1.12.1

@@ -36,7 +36,7 @@ public:
     inline int size(int a)
     {
         // 查看某uf_set的大小
-        return sizes[parent[a]];
+        return sizes[find_root(a)];
     }
     inline int size()
     {
@@ -67,15 +67,15 @@ public:
     }
 };
 
-// int main()
-// {
-//     UFSet ufset(10);
-//     cout << ufset.union_ufset(0, 1) << '\n';
-//     cout << ufset.union_ufset(0, 1) << '\n';
-//     cout << ufset.union_ufset(2, 3) << '\n';
-//     cout << ufset.union_ufset(1, 5) << '\n';
-//     cout << ufset.union_ufset(1, 2) << '\n';
-//     cout << ufset.size(1) << '\n';
-//     cout << ufset.size() << '\n';
-// }
+int main()
+{
+    UFSet ufset(10);
+    cout << ufset.union_ufset(0, 1) << '\n';
+    cout << ufset.union_ufset(0, 1) << '\n';
+    cout << ufset.union_ufset(2, 3) << '\n';
+    cout << ufset.union_ufset(1, 5) << '\n';
+    cout << ufset.union_ufset(1, 2) << '\n';
+    cout << ufset.size(1) << '\n';
+    cout << ufset.size() << '\n';
+}
 #endif

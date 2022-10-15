@@ -100,13 +100,13 @@ public:
     }
 };
 
-// int main()
-// {
-//     vector<int> v = {1, 2, 3, 4};
-//     BinaryIndexedTree bit(v);
-//     bit.update(0, 1);
-//     cout << bit.prefix_sum(3);
-//     cout << bit.prefix_sum(0);
-// }
+int main()
+{
+    vector<int> v = {1, 2, 3, 4};
+    BinaryIndexedTree bit(v);
+    bit.update(0, 1);
+    cout << bit.prefix_sum(3);
+    cout << bit.prefix_sum(0);
+}
 
 #endif
